@@ -16,7 +16,7 @@
 # print(x)
 # print(x.shape)
 
-# print("-_-;;!!!")
+# print(">❤️<")
 
 from tensorflow.keras.datasets import boston_housing
 data = boston_housing.load_data()
