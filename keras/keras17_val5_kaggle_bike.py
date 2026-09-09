@@ -44,6 +44,11 @@ x_train, x_test, y_train, y_test = train_test_split(
     random_state=333)
 print(x.shape,y.shape)
 
+x_train, x_val , y_train, y_val = train_test_split(
+                                    x_train, y_train,
+                                   train_size = 0.5,
+                                   random_state = 123,)
+
 #2. 모델구성 
 model = Sequential()
 model.add(Dense(64,activation = 'relu',input_dim=8))
@@ -53,7 +58,8 @@ model.add(Dense(1,activation = 'relu'))
 
 #3. 컴파일 훈련
 model.compile(loss='mse', optimizer='adam')
-model.fit(x_train,y_train,epochs=1500,batch_size=10)
+model.fit(x_train,y_train,epochs=1500,batch_size=10,
+          validation_data = (x_val, y_val))
 #4. 평가예측 
 loss = model.evaluate(x_test,y_test)
 print('loss :', loss)
@@ -72,6 +78,5 @@ submission['count'] = y_submit
 print("submission :" ,submission)
 print(submission.shape)
 
-submission.to_csv(path + "submit/" + "submit_0909_1005.csv")
+# submission.to_csv(path + "submit/" + "submit_0909_1005.csv")
 
-#제시하는 스코어 0.32

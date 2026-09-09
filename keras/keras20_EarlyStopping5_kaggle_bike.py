@@ -44,6 +44,11 @@ x_train, x_test, y_train, y_test = train_test_split(
     random_state=333)
 print(x.shape,y.shape)
 
+x_train, x_val , y_train, y_val = train_test_split(
+                                    x_train, y_train,
+                                   train_size = 0.5,
+                                   random_state = 123,)
+
 #2. 모델구성 
 model = Sequential()
 model.add(Dense(64,activation = 'relu',input_dim=8))
@@ -53,7 +58,15 @@ model.add(Dense(1,activation = 'relu'))
 
 #3. 컴파일 훈련
 model.compile(loss='mse', optimizer='adam')
-model.fit(x_train,y_train,epochs=1500,batch_size=10)
+from tensorflow.keras.callbacks import EarlyStopping
+es = EarlyStopping(
+    monitor='val_loss',
+    mode = 'min',
+    patience= 50,
+    restore_best_weights= True,
+)
+hist = model.fit(x_train,y_train,epochs=1000,batch_size=32,
+          validation_data = (x_val, y_val),callbacks=[es],)
 #4. 평가예측 
 loss = model.evaluate(x_test,y_test)
 print('loss :', loss)
@@ -72,6 +85,32 @@ submission['count'] = y_submit
 print("submission :" ,submission)
 print(submission.shape)
 
-submission.to_csv(path + "submit/" + "submit_0909_1005.csv")
+# submission.to_csv(path + "submit/" + "submit_0909_1005.csv")
 
-#제시하는 스코어 0.32
+print("===================history========================")
+print(hist)
+print("===================hist.history========================")
+print(hist.history)
+print("===================loss========================")
+print(hist.history["loss"])
+print("===================val_loss========================")
+print(hist.history["val_loss"])
+print("===========================================")
+
+####그래프그리기####
+import matplotlib.pyplot as plt
+
+plt.rcParams['font.family'] = 'Malgun Gothic'       #한글깨짐현상 폰트지정해주기 
+
+plt.figure(figsize=(9,6))
+plt.plot(hist.history['loss'][2:],c='red',label='loss')# y값만 넣으면 시간순으로 그려줌
+plt.plot(hist.history['val_loss'][2:],c='blue',label='val_loss')
+plt.legend(loc= 'upper right')#우측상단에 라벨표시  #location 위치어디로할건지 
+plt.title('kaggle 자전거 대여량 Loss') 
+plt.xlabel('epoch')
+plt.ylabel('loss')
+plt.grid() #격자표시 추가 
+plt.show()
+
+# 3 애포 부터 100애포 까지 
+

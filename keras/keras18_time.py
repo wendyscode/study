@@ -1,5 +1,5 @@
-# 파일의 경로
-# https://www.kaggle.com/competitions/bike-sharing-demand/data
+# 14-1 카피
+#결과가 나오는 시간 재기 
 
 import numpy as np
 import pandas as pd
@@ -7,6 +7,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_absolute_error
+import time
+
 
 #1. 데이터
 path = './_data/kaggle_bike/'
@@ -26,8 +28,8 @@ print(train_csv.info())
 print(test_csv.info())
 
 print(train_csv.describe()) # [8 rows x 11 columns] #describe요약해서보여줘
-#########################결측치 확인 ######################
-print(train_csv.isna().sum()) # 
+
+print(train_csv.isna().sum()) # #########################결측치 확인 ######################
 print(test_csv.isnull().sum()) #결측치 확인 isna = isnull
 
 ########################### x,y 분리#####################
@@ -51,9 +53,13 @@ model.add(Dense(32,activation = 'relu'))
 model.add(Dense(16,activation = 'relu'))
 model.add(Dense(1,activation = 'relu'))
 
-#3. 컴파일 훈련
+#3. 컴파일 훈련         #훈련 자체에 시간 재기 
 model.compile(loss='mse', optimizer='adam')
-model.fit(x_train,y_train,epochs=1500,batch_size=10)
+start_time = time.time()        #현재시간을 반환. 시작시간
+model.fit(x_train,y_train,epochs=2,batch_size=10)
+end_time = time.time()          #현재시간을 반환 . 끝시간 
+
+
 #4. 평가예측 
 loss = model.evaluate(x_test,y_test)
 print('loss :', loss)
@@ -65,6 +71,10 @@ from sklearn.metrics import r2_score, mean_squared_error
 rmse = np.sqrt(mean_squared_error(y_test, y_predict))
 print("RMSE : ", rmse)
 
+print("걸린시간 :", round(end_time - start_time,2), "초")
+# round : 소수점에서 반올림한다 , 2= 소수둘쨋자리에서 반올림
+
+'''
 print(submission)
 y_submit = model.predict(test_csv)
 
@@ -74,4 +84,4 @@ print(submission.shape)
 
 submission.to_csv(path + "submit/" + "submit_0909_1005.csv")
 
-#제시하는 스코어 0.32
+'''
