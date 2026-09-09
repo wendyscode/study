@@ -30,10 +30,25 @@ print(np.unique(y,return_counts=True)) #(array([0, 1, 2]), array([50, 50, 50]))
 [0,0,1]]    #(5,3)
 
 """
-from tensorflow.keras.utils import to_categorical
-y = to_categorical(y)
+################## 원핫1. to_categorical #################
+# from tensorflow.keras.utils import to_categorical
+# y = to_categorical(y)
+# print(y)
+# print(y.shape)
+###################### 원핫2. pandas #####################
+# y = pd.get_dummies(y, dtype= int)
+# print(y)
+
+###################### 원핫3. sklearn ####################
+from sklearn.preprocessing import OneHotEncoder
+# y = y.reshape(150,1)    #(150, 1)
+y = y.reshape(-1,1)       #(150, 1)
+print(y,y.shape)
+
+# ohe = OneHotEncoder() #sparse 형태로 나온다.
+ohe = OneHotEncoder(sparse_output= False)
+y = ohe.fit_transform(y)
 print(y)
-print(y.shape)
 
 # exit()
 x_train , x_test, y_train , y_test = train_test_split(
@@ -44,7 +59,7 @@ x_train , x_test, y_train , y_test = train_test_split(
     stratify=y,  
 )
 print(x_train.shape,x_test.shape)   #(120, 4) (30, 4)
-print(x_train.shape,y_test.shape)   #(120, 4) (30, 3)
+print(y_train.shape,y_test.shape)   #(120, 3) (30, 3)
 
 # exit()
 #2. 모델구성 
@@ -77,11 +92,20 @@ print('loss: ',result[0])
 print('acc: ',round(result[1],2))
 
 y_predict = model.predict(x_test)
+print(y_predict)
+y_predict = np.argmax(y_predict, axis=1)
+print(y_predict)
+#[0 2 0 2 1 1 0 2 0 2 2 2 2 0 0 0 2 0 2 1 0 2 1 1 0 2 1 1 1 2]
+y_test = np.argmax(y_test, axis=1)
+print(y_test)
+# [0 2 0 1 1 1 0 2 0 2 2 2 2 0 0 0 2 0 2 1 0 2 1 1 0 2 1 1 1 1]
 
+# exit()
 accuracy_score = accuracy_score(y_test, y_predict)
 print('acc_score : ', accuracy_score)
 print(" 걸린시간 : ", round(end_time - start_time,2),"초")
-
+# acc_score :  0.9333333333333333
+#  걸린시간 :  15.52 초
 
 
 
