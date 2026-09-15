@@ -5,8 +5,8 @@ from sklearn.datasets import fetch_covtype
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential, load_model #🩷
+from tensorflow.keras.layers import Dense, Dropout #💛
 from tensorflow.keras.callbacks import EarlyStopping
 import time
 from sklearn.metrics import accuracy_score
@@ -65,21 +65,52 @@ model.add(Dense(10, activation='relu'))
 model.add(Dense(10, activation='relu'))
 model.add(Dense(7, activation='softmax'))
 
-#3. 컴파일, 훈련  
-model.compile(loss='categorical_crossentropy',optimizer='adam',metrics=['acc'])
-es = EarlyStopping(
-    monitor='val_loss',
-    mode = 'auto',
-    patience= 10,
-    restore_best_weights= True,
-)
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint #🤎🤎🤎🤎🤎
+
+#3. 컴파일 훈련
+model.compile(loss='mse',optimizer = 'adam',metrics = ['acc'],)
+
+es = EarlyStopping(monitor='val_loss', mode= 'min',
+                    patience= 30,
+                    restore_best_weights= True,
+                    verbose=1,
+                   )
+################## mcp 세이브 파일명 만들기 시작 #####################🩷🩷🩷🩷🩷
+import datetime
+date = datetime.datetime.now()  #현재시간반환
+print(date)         #2026-09-14 11:41:15.177740
+print(type(date))   #<class 'datetime.datetime'>
+date = date.strftime("%m%d_%H%M")
+print(date)         #0914_1147
+print(type(date))   #<class 'str'> : 문자형태
+
+path = './_save/keras31/'
+filename ='{epoch:04d}-{val_loss:.4f}.keras'
+filepath ="".join([path,"k31_fetch_covtype_",date,"-", filename])
+
+# 내가 생각하는 파일명 예.
+# './_save/keras30/' + "k30_" + "0914_1147" + '530-0.001.keras'
+#################### mcp 세이브 파일명 만들기 끝 #####################🩷🩷🩷🩷🩷
+# exit()
+
+mcp = ModelCheckpoint(                      
+    monitor='val_loss', 
+    mode='auto', 
+    save_best_only= True, 
+    filepath=  filepath,   
+    verbose=1,
+)                                           
+
 start_time = time.time()
-model.fit(x_train,y_train, epochs=1000, batch_size=256,
-          verbose=1,
-          validation_split = 0.2,
-          callbacks =[es]
-          )
+hist = model.fit(x_train,y_train,
+                 epochs=1000,batch_size=512,validation_split = 0.2,
+                callbacks=[es,mcp],          
+                verbose=1,
+                 )
 end_time = time.time()
+
+
+print("=======================================")
 
 #4. 평가, 예측 
 result = model.evaluate(x_test,y_test,)
@@ -98,25 +129,4 @@ print('acc_score : ', accuracy_score)
 print(" 걸린시간 : ", round(end_time - start_time,2),"초")
 
 '''
-성능비교 
-기존 : 
-acc_score :  0.7109110780272454
- 걸린시간 :  17.39 초
-
-Minmax : 
-acc_score :  0.7447139918934967
- 걸린시간 :  17.02 초
- 
-StandardScaler:
- acc_score :  0.7587067459532025
- 걸린시간 :  16.57 초
-
-MaxAbsScaler  : 
- acc_score :  0.7721401340757124
- 걸린시간 :  329.12 초
-
-RobustScaler    :
-acc_score :  0.7944028983761177
- 걸린시간 :  156.15 초
-
 '''

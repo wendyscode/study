@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Sequential, load_model #🩷
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.callbacks import EarlyStopping
 import time
@@ -61,22 +61,52 @@ model.add(Dense(10, activation='relu'))
 model.add(Dense(10, activation='relu'))
 model.add(Dense(2, activation='softmax'))
 
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint #🤎🤎🤎🤎🤎
+
 #3. 컴파일 훈련
-model.compile (loss='categorical_crossentropy', optimizer = 'adam',metrics=['acc'])
-es = EarlyStopping(
-    monitor='val_loss',
-    mode='auto',
-    patience=20,
-    restore_best_weights= True,
-)
+model.compile(loss='mse',optimizer = 'adam',metrics = ['acc'],)
+
+es = EarlyStopping(monitor='val_loss', mode= 'min',
+                    patience= 30,
+                    restore_best_weights= True,
+                    verbose=1,
+                   )
+################## mcp 세이브 파일명 만들기 시작 #####################🩷🩷🩷🩷🩷
+import datetime
+date = datetime.datetime.now()  #현재시간반환
+print(date)         #2026-09-14 11:41:15.177740
+print(type(date))   #<class 'datetime.datetime'>
+date = date.strftime("%m%d_%H%M")
+print(date)         #0914_1147
+print(type(date))   #<class 'str'> : 문자형태
+
+path = './_save/keras31/'
+filename ='{epoch:04d}-{val_loss:.4f}.keras'
+filepath ="".join([path,"k31_santander_",date,"-", filename])
+
+# 내가 생각하는 파일명 예.
+# './_save/keras30/' + "k30_" + "0914_1147" + '530-0.001.keras'
+#################### mcp 세이브 파일명 만들기 끝 #####################🩷🩷🩷🩷🩷
+# exit()
+
+mcp = ModelCheckpoint(                      
+    monitor='val_loss', 
+    mode='auto', 
+    save_best_only= True, 
+    filepath=  filepath,   
+    verbose=1,
+)                                           
 
 start_time = time.time()
-model.fit(x_train, y_train, epochs=300, batch_size=64,
-          verbose = 1,
-          validation_split = 0.2,
-          callbacks = [es],
-          )
+hist = model.fit(x_train,y_train,
+                 epochs=1000,batch_size=32,validation_split = 0.2,
+                callbacks=[es,mcp],          
+                verbose=1,
+                 )
 end_time = time.time()
+
+
+print("=======================================")
 
 #4. 평가, 예측
 result = model.evaluate(x_test, y_test)
@@ -102,25 +132,7 @@ submission_csv['target'] = y_pred
 
 
 '''
-성능비교 
-기존 : 
-acc_score :  0.910225
-걸린시간 :  39 초
-
-Minmax : 
-acc_score :  0.912425
-걸린시간 :  14 초
-
-StandardScaler:
-acc_score :  0.9118
-걸린시간 :  14 초
-
-MaxAbsScaler  : 
-acc_score :  0.912775
-걸린시간 :  161 초
-
-RobustScaler    :
-acc_score :  0.91265
-걸린시간 :  49 초
+acc_score :  0.91315
+걸린시간 :  123 초
 
 '''

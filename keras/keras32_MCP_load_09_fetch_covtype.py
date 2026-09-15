@@ -5,7 +5,7 @@ from sklearn.datasets import fetch_covtype
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Sequential, load_model #🩷
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.callbacks import EarlyStopping
 import time
@@ -57,29 +57,13 @@ scaler.fit(x_train) #Train을 보고 기준을 정해!⭐⭐⭐
 x_train = scaler.transform(x_train) # ⭐ Train이 기준을 정함
 x_test = scaler.transform(x_test)   # ⭐ Test는 그 기준을 사용
 
-#2. 모델구성 
-model = Sequential()
-model.add(Dense(10, input_dim =54, activation='relu'))
-model.add(Dense(10, activation='relu'))
-model.add(Dense(10, activation='relu'))
-model.add(Dense(10, activation='relu'))
-model.add(Dense(7, activation='softmax'))
+#2. 모델 구성 
+path = './_save/keras31/'#🩷🩷🩷
+model = load_model(path + '파일명.keras')#🩷🩷🩷
 
-#3. 컴파일, 훈련  
-model.compile(loss='categorical_crossentropy',optimizer='adam',metrics=['acc'])
-es = EarlyStopping(
-    monitor='val_loss',
-    mode = 'auto',
-    patience= 10,
-    restore_best_weights= True,
-)
-start_time = time.time()
-model.fit(x_train,y_train, epochs=1000, batch_size=256,
-          verbose=1,
-          validation_split = 0.2,
-          callbacks =[es]
-          )
-end_time = time.time()
+#3. 컴파일 훈련
+model.save(path + '파일명.keras') #🩷🩷🩷
+print("=======================================")
 
 #4. 평가, 예측 
 result = model.evaluate(x_test,y_test,)
@@ -98,25 +82,6 @@ print('acc_score : ', accuracy_score)
 print(" 걸린시간 : ", round(end_time - start_time,2),"초")
 
 '''
-성능비교 
-기존 : 
-acc_score :  0.7109110780272454
- 걸린시간 :  17.39 초
 
-Minmax : 
-acc_score :  0.7447139918934967
- 걸린시간 :  17.02 초
- 
-StandardScaler:
- acc_score :  0.7587067459532025
- 걸린시간 :  16.57 초
-
-MaxAbsScaler  : 
- acc_score :  0.7721401340757124
- 걸린시간 :  329.12 초
-
-RobustScaler    :
-acc_score :  0.7944028983761177
- 걸린시간 :  156.15 초
 
 '''

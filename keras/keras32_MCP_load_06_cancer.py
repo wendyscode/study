@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Sequential, load_model #🩷
 from tensorflow.keras.layers import Dense
 from sklearn.model_selection import train_test_split
 import time
@@ -60,34 +60,12 @@ scaler.fit(x_train) #Train을 보고 기준을 정해!⭐⭐⭐
 x_train = scaler.transform(x_train) # ⭐ Train이 기준을 정함
 x_test = scaler.transform(x_test)   # ⭐ Test는 그 기준을 사용
 
-#2.모델구성
-model = Sequential()
-model.add(Dense(64, input_dim=30, activation='relu'))
-model.add(Dense(32,activation='relu'))
-model.add(Dense(16,activation='relu'))
-model.add(Dense(1,activation='sigmoid'))
+#2. 모델 구성 
+path = './_save/keras31/'#🩷🩷🩷
+model = load_model(path + '파일명.keras')#🩷🩷🩷
 
-#3.컴파일 훈련
-model.compile(loss='binary_crossentropy',optimizer='adam',
-            # metrics = ['accuracy'],#  몇 % 맞혔는지 확인
-            metrics = ['acc'], #애큐러시 몇프로 맞혔는지 확인 
-
-              )
-es = EarlyStopping(
-    monitor='val_loss',
-    mode= 'min',
-    patience= 20,
-    restore_best_weights= True,
-)
-
-start_time = time.time()
-hist = model.fit(x_train, y_train , epochs=1000, batch_size=32,
-                 verbose = 1,
-                 callbacks = [es],
-                 validation_split = 0.3,
-          )
-
-end_time = time.time()
+#3. 컴파일 훈련
+model.save(path + '파일명.keras') #🩷🩷🩷
 
 #4. 평가예측 
 loss = model.evaluate(x_test,y_test)
@@ -107,35 +85,6 @@ print("acc_score :",acc_score)
 
 
 '''
-성능비교 
-기존 : 
-=======================================
-loss : 0.14382009208202362
-acc :  0.9298
-=======================================
 
-Minmax : 
-=======================================
-loss : 0.13074003159999847
-acc :  0.9591
-=======================================
-
-StandardScaler
-=======================================
-loss : 0.07734303921461105
-acc :  0.9766
-=======================================
-
-MaxAbsScaler  : 
-=======================================
-loss : 0.08760993927717209
-acc :  0.9649
-=======================================
-
-RobustScaler    :
-=======================================
-loss : 0.09934066981077194
-acc :  0.9649
-=======================================
 
 '''

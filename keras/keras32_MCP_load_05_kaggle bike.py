@@ -3,10 +3,11 @@
 
 import numpy as np
 import pandas as pd
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Sequential, load_model #🩷
 from tensorflow.keras.layers import Dense
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_absolute_error
+import time
 
 #1. 데이터
 path = './_data/kaggle_bike/'
@@ -61,24 +62,12 @@ x_train = scaler.transform(x_train) # ⭐ Train이 기준을 정함
 x_test = scaler.transform(x_test)   # ⭐ Test는 그 기준을 사용
 x_val = scaler.transform(x_val)
 
-#2. 모델구성 
-model = Sequential()
-model.add(Dense(64,activation = 'relu',input_dim=8))
-model.add(Dense(32,activation = 'relu'))
-model.add(Dense(16,activation = 'relu'))
-model.add(Dense(1))
+#2. 모델 구성 
+path = './_save/keras31/'#🩷🩷🩷
+model = load_model(path + '파일명.keras')#🩷🩷🩷
 
 #3. 컴파일 훈련
-model.compile(loss='mse', optimizer='adam')
-from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(
-    monitor='val_loss',
-    mode = 'min',
-    patience= 20,
-    restore_best_weights= True,
-)
-hist = model.fit(x_train,y_train,epochs=1000,batch_size=32,
-          validation_data = (x_val, y_val),callbacks=[es],)
+model.save(path + '파일명.keras') #🩷🩷🩷
  
 #4. 평가예측 
 loss = model.evaluate(x_test,y_test) 
@@ -98,41 +87,7 @@ rmse  = RMSE(y_test, y_predict)
 print("RMSE : ", rmse)
 
 '''
-성능비교 
-기존 : 
-loss : 66519.640625
-69/69 ━━━━━━━━━━━━━━━━━━━━ 0s 842us/step
-r2 = : -1.1284406185150146
-mse : 66519.625
-RMSE :  257.9139876005177
 
-Minmax : 
-loss : 21280.310546875
-69/69 ━━━━━━━━━━━━━━━━━━━━ 0s 743us/step
-r2 = : 0.31909018754959106
-mse : 21280.306640625
-RMSE :  145.87771125372444
-
-StandardScaler: 
-loss : 21272.44140625
-69/69 ━━━━━━━━━━━━━━━━━━━━ 0s 782us/step
-r2 = : 0.3572680354118347
-mse : 21272.447265625
-RMSE :  145.85077053490323
-
-MaxAbsScaler  : 
-loss : 22073.513671875
-69/69 ━━━━━━━━━━━━━━━━━━━━ 0s 838us/step
-r2 = : 0.33306431770324707
-mse : 22073.515625
-RMSE :  148.57158417745973
-
-RobustScaler    :
-loss : 21394.19921875
-69/69 ━━━━━━━━━━━━━━━━━━━━ 0s 760us/step
-r2 = : 0.3535892963409424
-mse : 21394.201171875
-RMSE :  146.26756705392688
 
 '''
 

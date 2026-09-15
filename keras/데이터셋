@@ -1,0 +1,15 @@
+<회기>
+01_california
+02_diabetes
+03_boston
+
+<이중분류>
+04_dacon_ddarung
+05_kaggle bike
+06_cancer
+07_santander
+
+<다중분류>
+08_wine
+09_fetch_covtype
+10_digits

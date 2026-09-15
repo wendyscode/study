@@ -1,8 +1,9 @@
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Sequential, load_model #🩷
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.datasets import boston_housing
 import numpy as np
 from sklearn.model_selection import train_test_split
+import time
 
 #1. 데이터 
 (x_train,y_train),(x_test,y_test)=boston_housing.load_data()
@@ -35,28 +36,12 @@ x_test = scaler.transform(x_test)   # ⭐ Test는 그 기준을 사용
 x_val = scaler.transform(x_val)
 
 #2. 모델 구성 
-model = Sequential()
-model.add(Dense(10, input_dim=13, activation='relu'))
-model.add(Dense(10, activation='relu'))
-model.add(Dense(10, activation='relu'))
-model.add(Dense(10, activation='relu'))
-model.add(Dense(1))
+path = './_save/keras31/'#🩷🩷🩷
+model = load_model(path + '파일명.keras')#🩷🩷🩷
 
-#3.컴파일 훈련
-model.compile(loss= 'mse' , optimizer='adam')
+#3. 컴파일 훈련
+model.save(path + '파일명.keras') #🩷🩷🩷
 
-from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(
-    monitor= 'val_loss',
-    mode= 'min',
-    patience= 10,
-    restore_best_weights= True,
-)
-hist = model.fit(x_train, y_train, epochs=1000, batch_size=32,
-          validation_data = (x_val, y_val),
-          callbacks=[es],)
-
-print("======================================")
 #4. 평가예측 
 loss = model.evaluate(x_test,y_test) 
 print('loss :' , loss)
@@ -83,41 +68,6 @@ print("RMSE : ", rmse)
 
 
 '''
-성능비교 
-기존 :
- loss : 66.09056854248047
-4/4 ━━━━━━━━━━━━━━━━━━━━ 0s 9ms/step 
-r2 = : 0.20606067514265214
-mse : 66.09056489233741
-RMSE :  8.129610377646484
-
-Minmax : 
-loss : 20.150224685668945
-4/4 ━━━━━━━━━━━━━━━━━━━━ 0s 14ms/step
-r2 = : 0.7579373619651317
-mse : 20.150225572877776
-RMSE :  4.488900263191172
-
-StandardScaler
-loss : 16.684106826782227
-4/4 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-r2 = : 0.799575507196352
-mse : 16.684106118604635
-RMSE :  4.084618234132124
-
-MaxAbsScaler  : 
-loss : 28.205215454101562
-4/4 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
-r2 = : 0.6611735741493832
-mse : 28.205215668014016
-RMSE :  5.3108582797900015
-
-RobustScaler    :
-loss : 22.214235305786133
-4/4 ━━━━━━━━━━━━━━━━━━━━ 0s 15ms/step
-r2 = : 0.7331425967216036
-mse : 22.214237254894023
-RMSE :  4.713198198134046
 
 '''
 

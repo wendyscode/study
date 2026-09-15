@@ -2,11 +2,12 @@
 #서울시 따릉이 대여량 예측 경진대회!!
 
 import numpy as np
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Sequential, load_model #🩷
 from tensorflow.keras.layers import Dense
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_squared_error
 import pandas as pd
+import time
 
 #1. 데이터                        #.은현재폴더 study / 는 하위폴더  
 
@@ -58,19 +59,52 @@ model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
 model.add(Dense(1))
 
-#3.컴파일 훈련
-model.compile(loss='mse',optimizer='adam')
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint #🤎🤎🤎🤎🤎
 
-from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(
-    monitor= 'val_loss',
-    mode = 'min',
-    patience= 20,
-    restore_best_weights= True,
-)
-hist = model.fit(x_train, y_train , epochs=10000, batch_size=32,
-          validation_data = (x_val, y_val),
-          callbacks = [es],)
+#3. 컴파일 훈련
+model.compile(loss='mse',optimizer = 'adam')
+
+es = EarlyStopping(monitor='val_loss', mode= 'min',
+                    patience= 30,
+                    restore_best_weights= True,
+                    verbose=1,
+                   )
+################## mcp 세이브 파일명 만들기 시작 #####################🩷🩷🩷🩷🩷
+import datetime
+date = datetime.datetime.now()  #현재시간반환
+print(date)         #2026-09-14 11:41:15.177740
+print(type(date))   #<class 'datetime.datetime'>
+date = date.strftime("%m%d_%H%M")
+print(date)         #0914_1147
+print(type(date))   #<class 'str'> : 문자형태
+
+path = './_save/keras31/'
+filename ='{epoch:04d}-{val_loss:.4f}.keras'
+filepath ="".join([path,"k31_dacon ddrung_",date,"-", filename])
+
+# 내가 생각하는 파일명 예.
+# './_save/keras30/' + "k30_" + "0914_1147" + '530-0.001.keras'
+#################### mcp 세이브 파일명 만들기 끝 #####################🩷🩷🩷🩷🩷
+# exit()
+
+mcp = ModelCheckpoint(                      
+    monitor='val_loss', 
+    mode='auto', 
+    save_best_only= True, 
+    filepath=  filepath,   
+    verbose=1,
+)                                           
+
+start_time = time.time()
+hist = model.fit(x_train,y_train,
+                 epochs=1000,batch_size=32,validation_split = 0.2,
+                callbacks=[es,mcp],          
+                verbose=1,
+                 )
+end_time = time.time()
+
+
+print("=======================================")
 
 #4. 평가예측 
 loss = model.evaluate(x_test,y_test)
@@ -98,45 +132,8 @@ print("RMSE : ", rmse)
 
 
 '''
-성능비교 
-기존 : 
-loss : 2516.185791015625
-13/13 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step 
-13/13 ━━━━━━━━━━━━━━━━━━━━ 0s 588us/step
-r2 = : 0.6506164838114079
-mse : 2516.185743496728
-RMSE :  50.16159630132127
-
-Minmax : 
-loss : 2422.405029296875
-13/13 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step 
-13/13 ━━━━━━━━━━━━━━━━━━━━ 0s 83us/step
-r2 = : 0.6636383349900392
-mse : 2422.4051420331994
-RMSE :  49.217935166290744
-
-StandardScaler:
-loss : 2092.484130859375
-13/13 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step 
-13/13 ━━━━━━━━━━━━━━━━━━━━ 0s 1ms/step 
-r2 = : 0.7094493529536233
-mse : 2092.4839381008937
-RMSE :  45.743676482120385
-
-MaxAbsScaler  : 
-loss : 2126.7470703125
-13/13 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step 
-13/13 ━━━━━━━━━━━━━━━━━━━━ 0s 1ms/step 
-r2 = : 0.704691769924851
-mse : 2126.747038779167
-RMSE :  46.116667689450054
-
-RobustScaler    :
-loss : 2154.255859375
-13/13 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step 
-13/13 ━━━━━━━━━━━━━━━━━━━━ 0s 1ms/step 
-r2 = : 0.7008720384477527
-mse : 2154.2559321336903
-RMSE :  46.41396268509823
+r2 = : 0.6951428590753901
+mse : 2195.5162629470456
+RMSE :  46.85633642259119
 
 '''

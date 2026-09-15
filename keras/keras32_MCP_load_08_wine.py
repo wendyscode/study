@@ -4,7 +4,7 @@ from sklearn.datasets import load_wine
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Sequential, load_model #🩷
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.callbacks import EarlyStopping
 import time
@@ -49,30 +49,14 @@ x_test = scaler.transform(x_test)   # ⭐ Test는 그 기준을 사용
 print(x_train.shape, x_test.shape)  #(142, 13) (36, 13)
 print(y_train.shape, y_test.shape)  #(142, 3) (36, 3)
 
-# exit()
-# 2.모델구성 
-model = Sequential()
-model.add(Dense(64, input_dim=13, activation='relu'))
-model.add(Dense(32,activation='relu'))
-model.add(Dense(32,activation='relu'))
-model.add(Dense(16,activation='relu'))
-model.add(Dense(3,activation='softmax'))
+#2. 모델 구성 
+path = './_save/keras31/'#🩷🩷🩷
+model = load_model(path + '파일명.keras')#🩷🩷🩷
 
-#3. 컴파일, 훈련
-model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics=['acc'])
-es = EarlyStopping(
-    monitor='val_loss',
-    mode= 'auto',
-    patience= 50,
-    restore_best_weights= True,
-) 
-start_time = time.time()
-model.fit(x_train,y_train, epochs = 10000, batch_size=3,
-          verbose =1 ,
-          validation_split = 0.2,
-          callbacks = [es],
-          )
-end_time = time.time()
+#3. 컴파일 훈련
+model.save(path + '파일명.keras') #🩷🩷🩷
+
+print("=======================================")
 
 #4. 평가, 예측
 result = model.evaluate(x_test, y_test)
@@ -92,21 +76,6 @@ print("걸린시간 : ", round(end_time - start_time,2),"초")
 
 
 '''
-성능비교 
-기존 : 
-acc_score :  0.9166666666666666
-걸린시간 :  12.18 초
 
-Minmax : acc_score :  0.9722222222222222
-걸린시간 :  5.02 초
-
-StandardScaler: acc_score :  0.9722222222222222
-걸린시간 :  3.25 초
-
-MaxAbsScaler  : 
-acc_score :  1.0
-걸린시간 :  12.66 초
-
-RobustScaler    :
 
 '''
