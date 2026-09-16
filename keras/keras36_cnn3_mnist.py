@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, Dense,Dropout
+from tensorflow.keras.layers import Conv2D, Dense,Dropout,Flatten
 
 #1. 데이터
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
@@ -47,7 +47,18 @@ model.add(Conv2D(64,(3,3), input_shape=(28,28,1)))  #26,26,64
 model.add(Conv2D(filters=32, kernel_size=(3,3),activation='relu'))  #(24,24,32)
 model.add(Dropout(0.2))
 model.add(Conv2D(32,(2,2,), activation='relu')) #(23,23,32)
+model.add(Conv2D(16,(2,2,), activation='relu')) #(22,22,16)
+model.add(Dropout(0.2))
+model.add(Conv2D(32,(2,2,), activation='relu')) #(21,21,32)
+model.add(Dropout(0.2))
+model.add(Conv2D(16,(2,2,), activation='relu')) #(20,20,16)
 
+model.add(Flatten())
+model.add(Dense(units=32,activation='relu'))
+model.add(Dropout(0.2))
+model.add(Dense(units=16, input_shape =(32,),activation='relu'))
+
+model.add(Dense(10,activation='softmax'))   #(10,)
 model.summary()
 
 
