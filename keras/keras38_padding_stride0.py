@@ -18,3 +18,7 @@ model.add(Conv2D(filters=9, kernel_size=(3,3),      #7, 7, 9
 
 model.summary()
 
+'''
+accuracy_score :  0.9693
+걸린시간 :  42.9 초
+'''
