@@ -13,3 +13,9 @@
 08_wine
 09_fetch_covtype
 10_digits
+
+<CNN>
+01_mnist
+02_fashion 
+03_cifar10
+04_cifat100

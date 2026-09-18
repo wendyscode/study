@@ -1,11 +1,9 @@
-# 30-1 카피
+# 33-1 카피
 import numpy as np
 import pandas as pd
 from sklearn.datasets import fetch_california_housing
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Dropout, Conv2D,Flatten, GlobalAveragePooling2D #💛💛💛💛💛
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
 import time
 
 #1. 데이터 
