@@ -8,7 +8,7 @@ from tensorflow.python.keras.layers import MaxPooling2D, GlobalAveragePooling2D
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import time
 from sklearn.metrics import accuracy_score
-
+'''
 #1. 데이터 
 
 train_datagen = ImageDataGenerator(
@@ -50,7 +50,7 @@ xy_test = test_datagen.flow_from_directory(
 
 print(xy_train[0][0])   #첫번째 배치의 x데이터가됨
 print(xy_train[0][1])   #첫번째 배치의 y데이터가됨
-
+'''
 
 x_train = xy_train[0][0]
 y_train = xy_train[0][1]
@@ -66,10 +66,10 @@ np.save(np_path + 'keras45_01_y_train.npy' , arr = xy_train[0][1])  #또는 arr 
 np.save(np_path + 'keras45_01_x_test.npy' , arr = xy_train[0][0])  #또는 arr = x_train 도가능 
 np.save(np_path + 'keras45_01_y_test.npy' , arr = xy_train[0][1])  #또는 arr = x_train 도가능 
 
-x_train = np.load(np_path + 'keras45_01_x_train.npy')
-y_train = np.load(np_path + 'keras45_01_y_train.npy')
-x_test = np.load(np_path + 'keras45_01_x_test.npy')
-y_test = np.load(np_path + 'keras45_01_y_test.npy')
+x_train = np.load(np_path + 'keras45_01_x_train.npy') #❤️🩷🩶❤️🩷🩶
+y_train = np.load(np_path + 'keras45_01_y_train.npy') #❤️🩷🩶❤️🩷🩶
+x_test = np.load(np_path + 'keras45_01_x_test.npy') #❤️🩷🩶❤️🩷🩶
+y_test = np.load(np_path + 'keras45_01_y_test.npy') #❤️🩷🩶❤️🩷🩶
 
 print(x_train.shape,y_train.shape)
 print(x_train.shape,y_train.shape)

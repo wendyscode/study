@@ -1,5 +1,3 @@
-# 실습 목표0.77
-#배치사이즈 10000
 import numpy as np
 import tensorflow as tf
 from sklearn.metrics import accuracy_score
@@ -8,6 +6,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, Dense, Flatten, MaxPooling2D, Dropout
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import time
+
 
 train_datagen = ImageDataGenerator(
     rescale = 1./255,
@@ -24,25 +23,22 @@ test_datagen = ImageDataGenerator(
     rescale=1./255,
 )
 
-# path_train = './_data/image/cat_dog/train_set/'
-# path_test = './_data/image/cat_dog/test_set/'
-
-path_train = 'C:/study/_data/image/cat_dog/training_set/'
-path_test = 'C:/study/_data/image/cat_dog/test_set/'
+path_train = 'C:/study/_data/image/rps/'
+path_test = 'C:/study/_data/image//rps/'
 
 
 xy_train = train_datagen.flow_from_directory(
-    './_data/image/cat_dog/training_set',
+    path_train,
     target_size=(100, 100),
-    batch_size=10000,
+    batch_size=20,
     class_mode='binary', # 개/고양이 이진 분류
     shuffle=True
 )
 
 xy_test = test_datagen.flow_from_directory(
-    './_data/image/cat_dog/test_set',
+    path_test,
     target_size=(100, 100),
-    batch_size=10000,
+    batch_size=10,
     class_mode='binary',
     shuffle=False
 )
@@ -58,11 +54,11 @@ y_test = xy_test[0][1]
 print(x_train.shape, y_train.shape)
 print(x_test.shape, y_test.shape)
 
-np_path = './_data/kaggle_cat_dog_npy/'             #🤎💛🧡 🤎💛🧡
-np.save(np_path + 'keras45_01_x_train_catdog.npy' , arr = xy_train[0][0])  #또는 arr = x_train 도가능 
-np.save(np_path + 'keras45_01_y_train_catdog.npy' , arr = xy_train[0][1])  #🤎💛🧡 🤎💛🧡
-np.save(np_path + 'keras45_01_x_test_catdog.npy' , arr = xy_train[0][0])  #🤎💛🧡 🤎💛🧡
-np.save(np_path + 'keras45_01_y_test_catdog.npy' , arr = xy_train[0][1])  #🤎💛🧡 🤎💛🧡
+np_path = './_save/keras46/'             #🤎💛🧡 🤎💛🧡
+np.save(np_path + 'keras46_01_x_train_rps.npy' , arr = x_train)  #또는 arr = x_train 도가능 
+np.save(np_path + 'keras46_01_y_train_rps.npy' , arr = y_train)  #🤎💛🧡 🤎💛🧡
+np.save(np_path + 'keras46_01_x_test_rps.npy' , arr = x_test)  #🤎💛🧡 🤎💛🧡
+np.save(np_path + 'keras46_01_y_test_rps.npy' , arr = y_test)  #🤎💛🧡 🤎💛🧡
 
 
 # 2. 모델 구성 (CNN)
@@ -76,11 +72,11 @@ model = Sequential([
     Flatten(),
     Dense(64, activation='relu'),
     Dropout(0.5),
-    Dense(1, activation='sigmoid') # 이진 분류 마감
+    Dense(3, activation='softmax') # 이진 분류 마감
 ])
 
 # 3. 컴파일 및 훈련
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 es = EarlyStopping(monitor='val_loss', patience=20, mode='min',
                     restore_best_weights=True,
@@ -101,23 +97,22 @@ hist = model.fit(
 end_time = time.time()
  # 4. 평가
 
-
 print("==============model.evaluate======================")
 loss = model.evaluate(x_test, y_test, verbose=1)
 print('loss :', loss[0])
 print('loss :', loss[1])
 
 y_predict = model.predict(x_test)
-y_predict = np.round(y_predict)
+y_predict = np.argmax(y_predict, axis=1)
 
 acc_score = accuracy_score(y_test, y_predict)
 print('accuracy_score : ', acc_score)
 print('걸린시간 : ', round(end_time-start_time,2), '초')
 
 '''
-accuracy_score :  0.8116658428077114
-걸린시간 :  230.22 초
-
-accuracy_score :  0.8126544735541276
-걸린시간 :  52.2 초
+loss : 6.377624231390655e-06
+loss : 1.0
+1/1 [==============================] - 0s 65ms/step
+accuracy_score :  1.0
+걸린시간 :  4.28 초
 '''

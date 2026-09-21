@@ -92,7 +92,7 @@ model = Sequential([
 # 3. 컴파일 및 훈련
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-es = EarlyStopping(monitor='val_loss', patience=10, mode='min', restore_best_weights=True)
+es = EarlyStopping(monitor='val_loss', patience=100, mode='min', restore_best_weights=True)
 
 # 3.컴파일 훈련
 # generator 데이터셋 구조에 맞는 fit 실행
