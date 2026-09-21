@@ -90,12 +90,26 @@ es = EarlyStopping(monitor='val_loss', patience=20, mode='min',
 # 3.컴파일 훈련
 # generator 데이터셋 구조에 맞는 fit 실행
 start_time = time.time()
+
+path = './_save/keras46/'
+filename ='catdog.keras'
+
+
+mcp = ModelCheckpoint(                      
+    monitor='val_loss', 
+    mode='auto', 
+    save_best_only= True, 
+    filepath=  path+ filename,  
+    verbose=1,
+)   
+
 hist = model.fit(
     x_train,
     y_train,
     epochs=100,
     validation_data=(x_test, y_test),
-    callbacks=[es],
+    # callbacks=[es],
+    callbacks=[es,mcp],
     verbose=1, #🤎
 )
 end_time = time.time()
