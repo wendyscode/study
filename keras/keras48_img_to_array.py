@@ -9,8 +9,8 @@ img = load_img(path + '내사진.jpg', target_size=(150,150))
 #<PIL.Image.Image image mode=RGB size=150x150 at 0x2289A4019C0>
 print(type(img))#<class 'PIL.Image.Image'>
 
-# plt.imshow(img)
-# plt.show()
+plt.imshow(img)
+plt.show()
 
 arr = img_to_array(img)
 print(arr)
