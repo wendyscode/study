@@ -48,8 +48,19 @@ x_augmented = datagen.flow(
                     batch_size = augment_size,
                     shuffle= False
 ).next()[0]
+##변환완료##
+print(x_augmented.shape)    #(40000, 28, 28) (40000,)
+
+print(x_train.shape)
+x_train = x_train.reshape(60000,28,28,1)
+x_test = x_test.reshape(10000,28,28,1)
+
+x_train = np.concatenate((x_train, x_augmented))
+y_train = np.concatenate((y_train, y_augmented))
+print(x_train.shape, y_train.shape)
 
 exit()
+
 
 
 print(x_train.shape)    #(60000, 28, 28)
