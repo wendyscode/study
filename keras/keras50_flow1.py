@@ -28,13 +28,13 @@ print(arr.shape)    #(1, 150, 150, 3)
 ################# 요기부터 증폭이닷 ####################
 datagen = ImageDataGenerator(
     rescale = 1./255,
-    horizontal_flip=  True,    #수평 뒤집기, 
-    vertical_flip= True,        #수직 뒤집기, 
+    horizontal_flip=  True,    #수평 뒤집기, (좌우반전)
+    # vertical_flip= True,        #수직 뒤집기, (상하반전)
     width_shift_range= 0.1,     #평형이동,
-    height_shift_range=0.1,
-    rotation_range= 5,           #각도조절(정해진 각도만큼 이미지 회전)
-    zoom_range= 1.2,
-    shear_range= 0.7,           #좌표하나를 고정하고 다른 몇개의 좌표를 이동 (한마디로 찌부)
+    # height_shift_range=0.1,
+    rotation_range= 15,           #각도조절(정해진 각도만큼 이미지 회전)
+    # zoom_range= 1.1,
+    # shear_range= 0.7,           #좌표하나를 고정하고 다른 몇개의 좌표를 이동 (한마디로 찌부)
     fill_mode='nearest'         
 )
 
