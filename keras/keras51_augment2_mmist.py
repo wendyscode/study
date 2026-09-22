@@ -5,7 +5,7 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import matplotlib.pyplot as plt
-from tensorflow.keras.datasets import fashion_mnist
+from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 import pandas as pd
@@ -16,7 +16,7 @@ from sklearn.metrics import accuracy_score
 
 
 
-(x_train , y_train),(x_test,y_test) = fashion_mnist.load_data()
+(x_train , y_train),(x_test,y_test) = mnist.load_data()
 
 ################# 요기부터 증폭이닷 ####################
 datagen = ImageDataGenerator(

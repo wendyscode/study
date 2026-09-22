@@ -5,7 +5,7 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import matplotlib.pyplot as plt
-from tensorflow.keras.datasets import fashion_mnist
+from tensorflow.keras.datasets import cifar10
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 import pandas as pd
@@ -16,11 +16,12 @@ from sklearn.metrics import accuracy_score
 
 
 
-(x_train , y_train),(x_test,y_test) = fashion_mnist.load_data()
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+
 
 ################# 요기부터 증폭이닷 ####################
 datagen = ImageDataGenerator(
-    rescale = 1./255,
+    # rescale = 1./255,
     horizontal_flip=  True,    #수평 뒤집기, (좌우반전)
     # vertical_flip= True,        #수직 뒤집기, (상하반전)
     width_shift_range= 0.1,     #평형이동,
@@ -33,8 +34,8 @@ datagen = ImageDataGenerator(
 
 augment_size = 40000
 
-# randidx = np.random.randint(60000, size= augment_size)  #6만개중에 4만개 랜덤뽑기
-print(x_train.shape[0]) #60000
+
+print(x_train.shape[0]) 
 randidx = np.random.randint(x_train.shape[0], size= augment_size)  
 print(randidx.shape)
 print(len(randidx)) #리스트는 len으로 확인 
@@ -49,7 +50,7 @@ print(x_augmented.shape, y_augmented.shape) #(40000, 28, 28) (40000,)
 x_augmented = x_augmented.reshape(
     x_augmented.shape[0],
     x_augmented.shape[1],
-    x_augmented.shape[2], 1)
+    x_augmented.shape[2], 3)
 print(x_augmented.shape)    #(40000, 28, 28, 1)
 
 x_augmented = datagen.flow(
@@ -61,8 +62,8 @@ x_augmented = datagen.flow(
 print(x_augmented.shape)    #(40000, 28, 28) (40000,)
 
 print(x_train.shape)
-x_train = x_train.reshape(60000,28,28,1)
-x_test = x_test.reshape(10000,28,28,1)
+x_train = x_train.reshape(50000, 32, 32, 3)
+x_test = x_test.reshape(10000, 32, 32, 3)
 
 x_train = np.concatenate((x_train, x_augmented))
 y_train = np.concatenate((y_train, y_augmented))
@@ -85,8 +86,8 @@ x_test = x_test/255.
 print(np.max(x_train), np.min(x_train)) #1.0 0.0 #0→0.0=⚫검정
 print(np.max(x_test), np.min(x_test))   #1.0 0.0 #255→1.0=⚪흰색
 
-x_train = x_train.reshape(-1,28,28,1)
-x_test = x_test.reshape(-1,28,28,1)
+x_train = x_train.reshape(-1, 32, 32, 3)
+x_test = x_test.reshape(-1, 32, 32, 3)
 print(x_train.shape, x_test.shape)  #(60000, 28, 28, 1) (10000, 28, 28, 1)
 
 
@@ -102,7 +103,7 @@ print(y_train.shape, y_test.shape)
 
 #2. 모델 구성 
 model = Sequential()
-model.add(Conv2D(64,(3,3),input_shape=(28,28,1)))
+model.add(Conv2D(64,(3,3),input_shape=(32,32,3)))
 model.add(Conv2D(filters=32, kernel_size=(3,3), activation='relu'))
 model.add(Dropout(0.2))
 model.add(Conv2D(32,(2,2),activation='relu'))
@@ -159,6 +160,6 @@ print('걸린시간 : ', round(end_time-start_time,2), '초')
 
 
 '''
-accuracy_score :  0.906
-걸린시간 :  137.91 초
+accuracy_score :  0.7022
+걸린시간 :  414.21 초
 '''
