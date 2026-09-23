@@ -15,7 +15,9 @@
 10_digits
 
 <CNN>
-01_mnist
-02_fashion 
-03_cifar10
-04_cifat100
+11_mnist
+12_fashion
+13_cifar10
+14_cifat100
+15_man_woman
+
