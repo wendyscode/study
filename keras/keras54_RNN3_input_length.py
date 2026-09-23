@@ -1,3 +1,5 @@
+# 54-1 카피
+
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense,SimpleRNN
@@ -26,7 +28,8 @@ print(x.shape)  #(7, 3, 1)
 #2. 모델구성
 model = Sequential()
 # model.add(SimpleRNN(unit=10, input_shape=(3,1)))
-model.add(SimpleRNN(32,input_shape=(3,1)))
+# model.add(SimpleRNN(32,input_shape=(3,1)))
+model.add(SimpleRNN(units=10,input_length=3, input_dim=1))
 # 3차원들어가서 2(1)차원으로 나옴 => 바로 Dense와 연결가능 
 model.add(Dense(32, activation="relu"))
 model.add(Dense(16, activation="relu"))
