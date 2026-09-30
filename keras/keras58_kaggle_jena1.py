@@ -24,22 +24,26 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 # from sklearn.metrics import r2_score,accuracy_score,mean_absolute_error
 # from tensorflow.keras.utils import to_categorical
 
+#1. 데이터
 path='./_data/kaggle_jena/'
-
 datasets = pd.read_csv(path +'jena_climate_2009_2016.csv',index_col=0 )
 
 print("원본 데이터 모양:", datasets.shape)
 
+######################################
+#수정 :T (degC) <-이놈을 y로 잡는다.
+######################################
+
 # 마지막 144개 → 2016-12-31의 실제 wd
-y_cor = datasets[-144:]['wd (deg)']
+y_cor = datasets[-144:]['T (degC)'] 
 print("예측치정답데이터 :", y_cor.shape)
 
 ##########훈련할 데이터 자르기 ############
-x_data = datasets[:-288].drop(['wd (deg)'], axis=1) 
-y_data = datasets[144:-144][['wd (deg)']]         
+x_data = datasets[:-288].drop(['T (degC)'], axis=1) 
+y_data = datasets[144:-144][['T (degC)']]         
 
-print('풍향을제외한 나머지 기상데이터 :',x_data.shape) #전체 14개 컬럼 중 풍향(wd)을 제외한 나머지 13개의 기상 데이터
-print('풍향(wd (deg) :',y_data.shape) #풍향(wd (deg)) 컬럼
+print('섭씨온도을제외한 나머지 기상데이터 :',x_data.shape) #전체 14개 컬럼 중 풍향(wd)을 제외한 나머지 13개의 기상 데이터
+print('섭씨온도 (degC) :',y_data.shape) #풍향(wd (deg)) 컬럼
 
 size_x = 144
 size_y = 144
@@ -149,17 +153,19 @@ loss, mae = model.evaluate(
 print('loss :', loss)
 print('mae  :', mae)
 
-# 마지막 144개 데이터(2016-12-31) 예측해보기
-x_pre = datasets[-288:-144].drop(['wd (deg)'], axis=1)
+# summit용 x데이터
+x_predict = datasets[-288:-144].drop(['T (degC)'], axis=1)
+print(type(x_predict))
+x_predict = x_predict.to_numpy()
+print(x_predict.shape)
+x_predict = x_predict.reshape(1,144,13)
 
-x_pre_scaled = x_scaler.transform(x_pre)
-
-x_pre_3d = x_pre_scaled.reshape(1, 144, 13)
-
-y_pred = model.predict(x_pre_3d)
-
-print("2016-12-31 예측 wd:")
-print(y_pred)
+# x_pre = datasets[-288:-144].drop(['wd (deg)'], axis=1)
+# x_pre_scaled = x_scaler.transform(x_pre)
+# x_pre_3d = x_pre_scaled.reshape(1, 144, 13)
+# y_pred = model.predict(x_pre_3d)
+# print("2016-12-31 예측 wd:")
+# print(y_pred)
 
 
 '''
@@ -174,3 +180,8 @@ submission.to_csv(
 print('제출 파일 저장 완료')
 print(submission)
 '''
+
+"""
+loss : 10.57744312286377
+mae  : 2.528679609298706
+"""
