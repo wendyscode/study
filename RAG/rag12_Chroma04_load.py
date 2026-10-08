@@ -9,6 +9,7 @@ load_dotenv()
 api_key = os.environ["MONOROUTER_API_KEY"].strip()
 base_url = "https://monogpt.kr/api/monorouter/v1"
 
+"""
 from glob import glob
 
 path = './_data/rag_data/'
@@ -51,6 +52,7 @@ print("각 청크의 길이  :", list(len(text.page_content)for text in texts))
 # print("첫번째 청크의 내용 : ", texts[0].page_content )
 # print("첫번째 청크의 내용 : ", len(texts[0].page_content )) #259
 # print("두번째 청크의 내용 : ", texts[1].page_content)
+"""
 
 #03 임베딩
 from langchain_openai import OpenAIEmbeddings
@@ -65,12 +67,16 @@ vector = embeddings.embed_query(sample_text)
 # print(vector)
 print(len(vector))      #1536
 
-
 DB_PATH = './_db/Chroma12/'
 #저장
-vector_store = Chroma.from_documents(
-    documents= texts,
-    embedding=embeddings,
+# vector_store = Chroma.from_documents(
+#     documents= texts,
+#     embedding=embeddings,
+#     persist_directory= DB_PATH,
+#     collection_name= 'croma12',
+# )
+vector_store = Chroma(
+    embedding_function=embeddings,
     persist_directory= DB_PATH,
     collection_name= 'croma12',
 )
@@ -92,3 +98,4 @@ print(f"검색된 관련 문서 수 : {len(aaa)}")
 print(f"첫번째 관련 문서 내용 미리보기: {aaa[0].page_content[:50]}")
 
 
+#불러온다> 청킹한다 

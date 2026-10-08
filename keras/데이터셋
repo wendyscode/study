@@ -1,23 +1,24 @@
 <회기>
-01_california
-02_diabetes
-03_boston
+01_california.py
+02_diabetes.py
+03_boston.py
 
 <이중분류>
-04_dacon_ddarung
-05_kaggle bike
-06_cancer
-07_santander
+04_dacon_ddarung.py
+05_kaggle bike.py
+06_cancer.py
+07_santander.py
 
 <다중분류>
-08_wine
-09_fetch_covtype
-10_digits
+08_wine.py
+09_fetch_covtype.py
+10_digits.py
 
 <CNN>
-11_mnist
-12_fashion
-13_cifar10
-14_cifat100
-15_man_woman
+11_mnist.py
+12_fashion.py
+13_cifar10.py
+14_cifar100.py
+15_man_woman.py
 
+16_jena.py
