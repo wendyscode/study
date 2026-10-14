@@ -19,6 +19,11 @@
 12_fashion.py
 13_cifar10.py
 14_cifar100.py
-15_man_woman.py
 
-16_jena.py
+15 man_horse.py
+16 rgb.py
+
+17_man_woman.py
+18 cat_dog.py
+
+16_jena.py.py
