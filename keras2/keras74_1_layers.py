@@ -19,3 +19,4 @@ model.add(Dense(10,activation='softmax'))
 
 print(len(model.weights))
 print(len(model.trainable_weights))
+
