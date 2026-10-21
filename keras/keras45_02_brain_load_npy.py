@@ -8,67 +8,12 @@ from tensorflow.python.keras.layers import MaxPooling2D, GlobalAveragePooling2D
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import time
 from sklearn.metrics import accuracy_score
-'''
-#1. 데이터 
+# 1. Load the arrays created by keras45_01_brain_save_npy.py.
 
-train_datagen = ImageDataGenerator(
-    rescale = 1./255,
-    # horizontal_flip=  True,    #수평 뒤집기, 
-    # vertical_flip= True,        #수직 뒤집기, 
-    # width_shift_range= 0.1,     #평형이동,
-    # height_shift_range=0.1,
-    # rotation_range= 5,           #각도조절(정해진 각도만큼 이미지 회전)
-    # zoom_range= 1.2,
-    # shear_range= 0.7,           #좌표하나를 고정하고 다른 몇개의 좌표를 이동 (한마디로 찌부)
-    # fill_mode='nearest'         
-)
-test_datagen = ImageDataGenerator(
-    rescale=1./255,
-)
-
-path_train = './_data/image/brain/train/'
-path_test = './_data/image/brain/test/'
-
-xy_train = train_datagen.flow_from_directory(
-    path_train, #경로
-    target_size=(100,100),
-    batch_size = 32,
-    class_mode = 'binary',      #이진분류
-    color_mode = 'grayscale',    #흑백 
-    shuffle= True,
-)
-
-xy_test = test_datagen.flow_from_directory(
-    path_test,
-    target_size=(100,100),
-    batch_size = 32,
-    class_mode = 'binary',      #이진분류
-    color_mode = 'grayscale',    #흑백 
-    shuffle= False,             #test에서는 필요가없다.
-)
-
-
-print(xy_train[0][0])   #첫번째 배치의 x데이터가됨
-print(xy_train[0][1])   #첫번째 배치의 y데이터가됨
-'''
-
-x_train = xy_train[0][0]
-y_train = xy_train[0][1]
-x_test = xy_test[0][0]
-y_test = xy_test[0][1]
-
-print(x_train.shape, y_train.shape)
-print(x_test.shape, y_test.shape)
-
-np_path = './_data/kaggle_cat_dog_npy/'
-np.save(np_path + 'keras45_01_x_train.npy' , arr = xy_train[0][0])  #또는 arr = x_train 도가능 
-np.save(np_path + 'keras45_01_y_train.npy' , arr = xy_train[0][1])  #또는 arr = x_train 도가능 
-np.save(np_path + 'keras45_01_x_test.npy' , arr = xy_train[0][0])  #또는 arr = x_train 도가능 
-np.save(np_path + 'keras45_01_y_test.npy' , arr = xy_train[0][1])  #또는 arr = x_train 도가능 
-
-x_train = np.load(np_path + 'keras45_01_x_train.npy') #❤️🩷🩶❤️🩷🩶
-y_train = np.load(np_path + 'keras45_01_y_train.npy') #❤️🩷🩶❤️🩷🩶
-x_test = np.load(np_path + 'keras45_01_x_test.npy') #❤️🩷🩶❤️🩷🩶
+np_path = './_data/brain_npy/'
+x_train = np.load(np_path + 'keras45_01_x_train.npy')
+y_train = np.load(np_path + 'keras45_01_y_train.npy')
+x_test = np.load(np_path + 'keras45_01_x_test.npy')
 y_test = np.load(np_path + 'keras45_01_y_test.npy') #❤️🩷🩶❤️🩷🩶
 
 print(x_train.shape,y_train.shape)

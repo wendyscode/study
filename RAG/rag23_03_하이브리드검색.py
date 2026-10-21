@@ -13,13 +13,13 @@ texts = [
     Document(page_content="반도체는 컴퓨터의 핵심 부품이다."),
 ]
 
-query = "삼성전자의 반도체 사업"
+query = "attention mechanism"
 
 ###################### BM25 검색 ##########################
 # BM25는 키워드 기반 검색. Best Match 25
 from langchain_community.retrievers import BM25Retriever
 
-bm25_retriever = BM25Retriever.from_documents(texts)
+bm25_retriever = BM25Retriever.from_documents(split_docs)
 bm25_retriever.k = 3
 
 # bm25_docs = bm25_retriever.invoke(query)

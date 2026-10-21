@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential, load_model #🩷
-from tensorflow.keras.layers import Dense, Dropout #💛
+from tensorflow.keras.layers import Dense, Dropout, Conv1D, Flatten #💛
 from tensorflow.keras.callbacks import EarlyStopping
 import time
 from sklearn.metrics import accuracy_score

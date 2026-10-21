@@ -37,10 +37,9 @@ x_val = scaler.transform(x_val)
 
 #2. 모델 구성 
 path = './_save/keras31/'#🩷🩷🩷
-model = load_model(path + '파일명.keras')#🩷🩷🩷
+model = load_model(path + 'k31_03_boston_0917_1741-0129-41.7734.keras')
 
 #3. 컴파일 훈련
-model.save(path + '파일명.keras') #🩷🩷🩷
 
 #4. 평가예측 
 loss = model.evaluate(x_test,y_test) 

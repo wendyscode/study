@@ -62,10 +62,9 @@ x_test = scaler.transform(x_test)   # ⭐ Test는 그 기준을 사용
 
 #2. 모델 구성 
 path = './_save/keras31/'#🩷🩷🩷
-model = load_model(path + '파일명.keras')#🩷🩷🩷
+model = load_model(path + 'k31_cancer_0923_1105-0999-0.0253.keras')
 
 #3. 컴파일 훈련
-model.save(path + '파일명.keras') #🩷🩷🩷
 
 #4. 평가예측 
 loss = model.evaluate(x_test,y_test)

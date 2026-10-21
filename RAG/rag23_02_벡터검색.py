@@ -86,7 +86,7 @@ DB_PATH = './_db/Chroma12/'
 
 vector_store = Chroma.from_documents(
     embedding=embeddings,
-    documents =texts,
+    documents=split_docs,
     persist_directory=DB_PATH,
     collection_name='chroma12',
 )
@@ -96,7 +96,7 @@ vector_retriver = vector_store.as_retriever(
 )
 vector_docs = vector_retriver.invoke(query)
 
-print("====================BM25 검색결과 =====================")
+print("====================벡터 검색결과 =====================")
 for doc in vector_docs:
     print(doc.page_content)
 

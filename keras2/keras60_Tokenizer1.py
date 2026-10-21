@@ -5,10 +5,10 @@ text = "나는 지금 진짜 진짜 매우 매우 맛있는 김밥을 엄청 마
 token = Tokenizer() # 인스턴스(객체) = 클래스(),인스턴스 생성
 token.fit_on_texts([text]) # 단어사전 생성
 print(token.word_index) # 단어사전 확인
-#{'마구': 1, '진짜': 2, '매우': 3, '나는': 4, '맛있는': 5, '김밥을': 6, '엄청': 7, '먹었다': 8}
+#{'마구': 1, '진짜': 2, '매우': 3, '나는': 4, '지금': 5, '맛있는': 6, '김밥을': 7, '엄청': 8, '먹었다': 9}
 
 print(token.word_counts) # 단어 빈도수 확인
-#OrderedDict([('나는', 1), ('진짜', 2), ('매우', 2), ('맛있는', 1), ('김밥을', 1), ('엄청', 1), ('마구', 4), ('먹었다', 1)])
+#OrderedDict([('나는', 1), ('지금', 1), ('진짜', 2), ('매우', 2), ('맛있는', 1), ('김밥을', 1), ('엄청', 1), ('마구', 4), ('먹었다', 1)])
 
 x = token.texts_to_sequences([text]) # 단어를 시퀀스(정수)로 변환
 print(x) # [[4, 5, 2, 2, 3, 3, 6, 7, 8, 1, 1, 1, 1, 9]]
@@ -17,6 +17,7 @@ print(len(x)) # 1
 ################# 원핫 인코딩 3가지 만들기##############
 #1. pandas
 import pandas as pd
+df = pd.DataFrame({'color': ['red', 'blue', 'green', 'red', 'blue']})
 df_pandas = pd.get_dummies(df, columns=['color'])
 
 print(df_pandas)

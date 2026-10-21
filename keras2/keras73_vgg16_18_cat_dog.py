@@ -16,10 +16,10 @@ from keras.applications import VGG16
 
 # 1. 데이터 (keras45_04_catdog_load_npy.py 와 동일하게 로드, 이미 /255 스케일링 됨)
 np_path = './_data/kaggle_cat_dog_npy/'
-x_train = np.load(np_path + 'keras45_01_x_train_catdog2.npy')
-y_train = np.load(np_path + 'keras45_01_y_train_catdog2.npy')
-x_test = np.load(np_path + 'keras45_01_x_test_catdog2.npy')
-y_test = np.load(np_path + 'keras45_01_y_test_catdog2.npy')
+x_train = np.load(np_path + 'keras45_01_x_train_catdog.npy')
+y_train = np.load(np_path + 'keras45_01_y_train_catdog.npy')
+x_test = np.load(np_path + 'keras45_01_x_test_catdog.npy')
+y_test = np.load(np_path + 'keras45_01_y_test_catdog.npy')
 
 print(x_train.shape, y_train.shape)  # (N, 100, 100, 3) (N,)
 print(x_test.shape, y_test.shape)

@@ -51,10 +51,10 @@ print(y_train.shape, y_test.shape)  #(142, 3) (36, 3)
 
 #2. 모델 구성 
 path = './_save/keras31/'#🩷🩷🩷
-model = load_model(path + '파일명.keras')#🩷🩷🩷
+start_time = time.time()
+model = load_model(path + 'k31_wine_0923_1046-0007-0.0000.keras')
 
 #3. 컴파일 훈련
-model.save(path + '파일명.keras') #🩷🩷🩷
 
 print("=======================================")
 
@@ -72,6 +72,7 @@ print(y_test)
 
 accuracy_score = accuracy_score(y_test, y_predict)
 print('acc_score : ', accuracy_score)
+end_time = time.time()
 print("걸린시간 : ", round(end_time - start_time,2),"초")
 
 

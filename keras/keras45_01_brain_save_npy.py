@@ -60,11 +60,13 @@ y_test = xy_test[0][1]
 print(x_train.shape, y_train.shape)
 print(x_test.shape, y_test.shape)
 
-np_path = './_data/kaggle_cat_dog_npy/'             #🤎💛🧡 🤎💛🧡
+np_path = './_data/brain_npy/'
+from pathlib import Path
+Path(np_path).mkdir(parents=True, exist_ok=True)
 np.save(np_path + 'keras45_01_x_train.npy' , arr = xy_train[0][0])  #또는 arr = x_train 도가능 
 np.save(np_path + 'keras45_01_y_train.npy' , arr = xy_train[0][1])  #🤎💛🧡 🤎💛🧡
-np.save(np_path + 'keras45_01_x_test.npy' , arr = xy_train[0][0])  #🤎💛🧡 🤎💛🧡
-np.save(np_path + 'keras45_01_y_test.npy' , arr = xy_train[0][1])  #🤎💛🧡 🤎💛🧡
+np.save(np_path + 'keras45_01_x_test.npy' , arr = xy_test[0][0])  #🤎💛🧡 🤎💛🧡
+np.save(np_path + 'keras45_01_y_test.npy' , arr = xy_test[0][1])  #🤎💛🧡 🤎💛🧡
 
 
 # 실습 : "맹그러봐 !! "

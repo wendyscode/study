@@ -61,8 +61,8 @@ print(x_test.shape, y_test.shape)
 np_path = './_data/kaggle_cat_dog_npy/'             #🤎💛🧡 🤎💛🧡
 np.save(np_path + 'keras45_01_x_train_catdog.npy' , arr = xy_train[0][0])  #또는 arr = x_train 도가능 
 np.save(np_path + 'keras45_01_y_train_catdog.npy' , arr = xy_train[0][1])  #🤎💛🧡 🤎💛🧡
-np.save(np_path + 'keras45_01_x_test_catdog.npy' , arr = xy_train[0][0])  #🤎💛🧡 🤎💛🧡
-np.save(np_path + 'keras45_01_y_test_catdog.npy' , arr = xy_train[0][1])  #🤎💛🧡 🤎💛🧡
+np.save(np_path + 'keras45_01_x_test_catdog.npy' , arr = xy_test[0][0])  #🤎💛🧡 🤎💛🧡
+np.save(np_path + 'keras45_01_y_test_catdog.npy' , arr = xy_test[0][1])  #🤎💛🧡 🤎💛🧡
 
 
 # 2. 모델 구성 (CNN)

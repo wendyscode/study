@@ -9,7 +9,8 @@ from tensorflow.keras.layers import Conv2D, Dense, Flatten, MaxPooling2D, Dropou
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import time
 
-#1.데이터
+#1. 데이터는 keras45_03_catdog_save_npy.py에서 저장한 파일을 읽습니다.
+np_path = './_data/kaggle_cat_dog_npy/'
 '''
 train_datagen = ImageDataGenerator(
     rescale = 1./255,
@@ -52,24 +53,10 @@ xy_test = test_datagen.flow_from_directory(
 print(xy_train[0][0])   #첫번째 배치의 x데이터가됨
 print(xy_train[0][1])   #첫번째 배치의 y데이터가됨
 '''
-x_train = xy_train[0][0]
-y_train = xy_train[0][1]
-x_test = xy_test[0][0]
-y_test = xy_test[0][1]
-
-print(x_train.shape, y_train.shape)
-print(x_test.shape, y_test.shape)
-
-np_path = './_data/kaggle_cat_dog_npy/'             #🤎💛🧡 🤎💛🧡
-np.save(np_path + 'keras45_01_x_train.npy' , arr = xy_train[0][0])  #또는 arr = x_train 도가능 
-np.save(np_path + 'keras45_01_y_train.npy' , arr = xy_train[0][1])  #🤎💛🧡 🤎💛🧡
-np.save(np_path + 'keras45_01_x_test.npy' , arr = xy_train[0][0])  #🤎💛🧡 🤎💛🧡
-np.save(np_path + 'keras45_01_y_test.npy' , arr = xy_train[0][1])  #🤎💛🧡 🤎💛🧡
-
-x_train = np.load(np_path + 'keras45_01_x_train_catdog2.npy') #❤️🩷🩶❤️🩷🩶
-y_train = np.load(np_path + 'keras45_01_y_train_catdog2.npy') #❤️🩷🩶❤️🩷🩶
-x_test = np.load(np_path + 'keras45_01_x_test_catdog2.npy') #❤️🩷🩶❤️🩷🩶
-y_test = np.load(np_path + 'keras45_01_y_test_catdog2.npy') #❤️🩷🩶❤️🩷🩶
+x_train = np.load(np_path + 'keras45_01_x_train_catdog.npy')
+y_train = np.load(np_path + 'keras45_01_y_train_catdog.npy')
+x_test = np.load(np_path + 'keras45_01_x_test_catdog.npy')
+y_test = np.load(np_path + 'keras45_01_y_test_catdog.npy') #❤️🩷🩶❤️🩷🩶
 
 
 # 2. 모델 구성 (CNN)

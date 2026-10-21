@@ -59,10 +59,10 @@ x_test = scaler.transform(x_test)   # ⭐ Test는 그 기준을 사용
 
 #2. 모델 구성 
 path = './_save/keras31/'#🩷🩷🩷
-model = load_model(path + '파일명.keras')#🩷🩷🩷
+start_time = time.time()
+model = load_model(path + 'k31_fetch_covtype_0923_1039-0106-0.0409.keras')
 
 #3. 컴파일 훈련
-model.save(path + '파일명.keras') #🩷🩷🩷
 print("=======================================")
 
 #4. 평가, 예측 
@@ -79,6 +79,7 @@ print(y_test)
 
 accuracy_score = accuracy_score(y_test, y_predict)
 print('acc_score : ', accuracy_score)
+end_time = time.time()
 print(" 걸린시간 : ", round(end_time - start_time,2),"초")
 
 '''

@@ -3,6 +3,7 @@
 from sklearn.datasets import fetch_california_housing
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
+from tensorflow.keras.callbacks import EarlyStopping
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_squared_error, root_mean_squared_error
 import numpy as np

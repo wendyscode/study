@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from tensorflow.keras.models import Sequential, load_model #🩷
-from tensorflow.keras.layers import Dense, Dropout #💛
+from tensorflow.keras.layers import Dense, Dropout, Conv1D, Flatten #💛
 from sklearn.model_selection import train_test_split
 import time
 from tensorflow.keras.callbacks import EarlyStopping

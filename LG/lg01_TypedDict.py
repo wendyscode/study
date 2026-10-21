@@ -21,5 +21,5 @@ print(person)
 # {'name': '김말똥', 'age': '39', 'job': '회사원'}
 #########################################################
 
-person2 : Person = {'name' : '김개똥', 'age':20, 'job':'전사'}
+person2 : Person = {'name' : '김개똥', 'age':'20', 'job':'전사'}
 print(person2)
