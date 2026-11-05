@@ -139,18 +139,18 @@ print(response["messages"][-1].content)
 #5. 그래프 구성 
 builder = StateGraph(State)
 
-builder.add_node("search_agent", search_agent)
-builder.add_node("analysis_agent", analysis_agent)
-builder.add_node("merge_agent", merge_agent)
+builder.add_node("search", search_agent)
+builder.add_node("analysis", analysis_agent)
+builder.add_node("merge", merge_agent)
 
 ####################### 병렬 실행 #############################
-builder.add_edge(START, "search_agent")
-builder.add_edge(START, "analysis_agent")
+builder.add_edge(START, "search")
+builder.add_edge(START, "analysis")
 
 ########################### 변환 #########################
-builder.add_edge(["search_agent", "analysis_agent"], "merge_agent")
+builder.add_edge(["search", "analysis"], "merge")
 
-builder.add_edge("merge_agent", END)
+builder.add_edge("merge", END)
 
 #컴파일 
 graph = builder.compile()
@@ -163,10 +163,6 @@ response= graph.invoke(
 )
 
 print("Assistant : ", response["messages"][-1].content)
-
-
-
-
 
 
 #실행 
