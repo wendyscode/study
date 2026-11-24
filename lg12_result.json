@@ -1,0 +1,110 @@
+{
+  "n": 10,
+  "cot": 6,
+  "react": 5,
+  "avg_search": 2.6,
+  "blocked_repeat": 0,
+  "blocked_limit": 1,
+  "rows": [
+    {
+      "q": "Were Scott Derrickson and Ed Wood of the same nationality?",
+      "gold": "yes",
+      "cot": "Yes, both were American.",
+      "react": "Yes—both were American.",
+      "cot_ok": true,
+      "react_ok": true,
+      "searches": 2,
+      "stop": ""
+    },
+    {
+      "q": "What government position was held by the woman who portrayed Corliss Archer in the film Kiss and Tell?",
+      "gold": "Chief of Protocol",
+      "cot": "U.S. Ambassador to Ghana.",
+      "react": "U.S. Ambassador to Ghana",
+      "cot_ok": false,
+      "react_ok": false,
+      "searches": 2,
+      "stop": ""
+    },
+    {
+      "q": "What science fantasy young adult series, told in first person, has a set of companion books narrating the stories of enslaved worlds and alien species?",
+      "gold": "Animorphs",
+      "cot": "Animorphs by K. A. Applegate",
+      "react": "Animorphs",
+      "cot_ok": true,
+      "react_ok": true,
+      "searches": 3,
+      "stop": ""
+    },
+    {
+      "q": "Are the Laleli Mosque and Esma Sultan Mansion located in the same neighborhood?",
+      "gold": "no",
+      "cot": "No, they are in different neighborhoods.",
+      "react": "No — Laleli and Ortaköy.",
+      "cot_ok": true,
+      "react_ok": true,
+      "searches": 2,
+      "stop": ""
+    },
+    {
+      "q": "The director of the romantic comedy \"Big Stone Gap\" is based in what New York city?",
+      "gold": "Greenwich Village, New York City",
+      "cot": "New York City",
+      "react": "New York City",
+      "cot_ok": false,
+      "react_ok": false,
+      "searches": 2,
+      "stop": ""
+    },
+    {
+      "q": "2014 S/S is the debut album of a South Korean boy group that was formed by who?",
+      "gold": "YG Entertainment",
+      "cot": "YG Entertainment",
+      "react": "YG Entertainment",
+      "cot_ok": true,
+      "react_ok": true,
+      "searches": 2,
+      "stop": ""
+    },
+    {
+      "q": "Who was known by his stage name Aladin and helped organizations improve their performance as a consultant?",
+      "gold": "Eenasul Fateh",
+      "cot": "Peter Honey",
+      "react": "Tony Pallante",
+      "cot_ok": false,
+      "react_ok": false,
+      "searches": 6,
+      "stop": "검색 횟수 초과"
+    },
+    {
+      "q": "The arena where the Lewiston Maineiacs played their home games can seat how many people?",
+      "gold": "3,677 seated",
+      "cot": "4,000 people",
+      "react": "3,675 people",
+      "cot_ok": false,
+      "react_ok": false,
+      "searches": 1,
+      "stop": ""
+    },
+    {
+      "q": "Who is older, Annie Morton or Terry Richardson?",
+      "gold": "Terry Richardson",
+      "cot": "Terry Richardson is older.",
+      "react": "Annie Morton.",
+      "cot_ok": true,
+      "react_ok": false,
+      "searches": 2,
+      "stop": ""
+    },
+    {
+      "q": "Are Local H and For Against both from the United States?",
+      "gold": "yes",
+      "cot": "Yes, both Local H and For Against are from the United States.",
+      "react": "Yes—both are American bands.",
+      "cot_ok": true,
+      "react_ok": true,
+      "searches": 4,
+      "stop": ""
+    }
+  ]
+}

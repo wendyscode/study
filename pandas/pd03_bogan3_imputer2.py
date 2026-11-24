@@ -19,3 +19,10 @@ print(data2)
 imputer2 = SimpleImputer(strategy='constant',fill_value=777)
 data3 = imputer2.fit_transform(data)
 print(data3)
+
+imputer3 = SimpleImputer(
+    # strategy = lambda x : np.max(x)
+    strategy= lambda x : np.min(x)
+)
+data4 = imputer3.fit_transform(data)
+print(data4)

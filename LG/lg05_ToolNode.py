@@ -78,7 +78,10 @@ graph_builder.add_edge("tools", "chatbot")
 graph = graph_builder.compile()
 
 ############################ 6. 그래프실행 #############################
-query= "삼성전자의 오늘 주가를 알려줘 "
+# query= "삼성전자의 오늘 주가를 알려줘 "
+query = ("애플 리모컨이 원래 조작하려고 만들어진 프로그램은 무엇이고, "
+         "애플 리모컨 말고 그 프로그램을 조작할 수 있는 다른 기기는 뭐야? "
+         "답하기 전에 단계별로 검색해서 확인해 줘.")
 
 response = graph.invoke({
     "messages" : [("user",query)]
